@@ -1,0 +1,11 @@
+{
+  "name": "why",
+  "age": 18,
+  "friend": {
+    "name": "Lingard"
+  },
+  "bobbies": [
+    "足球",
+    "舞蹈"
+  ]
+}

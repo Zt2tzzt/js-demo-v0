@@ -1,0 +1,51 @@
+<!--
+ * @Description: file content
+ * @Author: ZeTian
+ * @Date: 2021-11-18 15:14:26
+ * @LastEditors: ZeTian
+ * @LastEditTime: 2021-11-19 10:24:12
+ * @LastEditContent: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <button id="cancel">取消</button>
+
+  <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-esm-min.js"></script> -->
+  <!-- <script src="./01_debounce-v1-基本实现.js"></script> -->
+  <!-- <script src="./02_debounce-v2-this-参数.js"></script> -->
+  <!-- <script src="./03_debounce-v3-立即执行.js"></script> -->
+  <script src="./05_debounce-v5-函数返回值.js"></script>
+  <script>
+    const inputEl = document.querySelector('input')
+    const cancelBtn = document.querySelector('#cancel')
+    let counter = 0
+
+    const inputChaange = function (event) {
+      console.log(`发送了${++counter}次网络请求`, this, event)
+      return 'aaaaaaaa'
+    }
+
+    const debounceChange = debounce(inputChaange, 1000, false, (res) => {
+      console.log('拿到真正执行函数的返回值:', res)
+    })
+    // 防抖处理
+    // inputEl.oninput = _.debounce(inputChaange, 1000) // underscore 防抖处理
+    inputEl.oninput = debounceChange
+    cancelBtn.onclick = function () {
+      debounceChange.cancel()
+    }
+
+  </script>
+</body>
+
+</html>

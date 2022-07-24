@@ -1,0 +1,49 @@
+<!--
+ * @Description: file content
+ * @Author: ZeT1an
+ * @Date: 2022-02-21 21:21:18
+ * @LastEditors: ZeT1an
+ * @LastEditTime: 2022-02-22 09:28:30
+ * @LastEditContent: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<input type="text" id="input">
+	<button id="cancel">取消</button>
+
+	<script src="./throttle.js"></script>
+	<script>
+		const inputEl = document.querySelector('#input')
+		const btnEl = document.querySelector('#cancel')
+
+		let counter = 0
+		function inputChange(event) {
+			console.log(`第${++counter}次发送请求`, this, event);
+			return 'Hello Frog'
+		}
+
+		const _debounce = throttle(inputChange, 1000)
+		function debounceChange(...args) {
+			_debounce.apply(this, args).then(res => {
+				console.log('接收到返回值：', res);
+			})
+		}
+		function debounceCancel() {
+			_debounce.cancel()
+		}
+
+		inputEl.oninput = debounceChange
+		btnEl.onclick = debounceCancel
+	</script>
+</body>
+
+</html>

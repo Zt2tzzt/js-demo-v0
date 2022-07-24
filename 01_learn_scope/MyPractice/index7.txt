@@ -1,0 +1,53 @@
+- 高级语言分为编译型和解释型语言
+编译型：C, C++, Java，将代码编译成可执行文件，再执行
+解释性：Javascript，Python，边读代码边做解释，再执行
+
+- 访问网站的过程：域名 -> dns解析 -> ip地址
+
+- 浏览器的4大内核，以及基本介绍和4个别称
+1.Gecko：最早用于NetScape公司的Mozilla，FireFox浏览器
+2.Trident，微软开发，用于IE4-IE11浏览器，edge已转用Blink
+3.WebKit，苹果基于KHTML开发，开源的，用于Safari浏览器，Chrome早期也在使用
+4.Blink：WebKit的一个分支，由Google开发，用于Chrome，Edge，Opera浏览器
+- 4个别称
+排版引擎（layout engine），浏览器引擎（Browser engine），页面渲染引擎（rendering engine），样板引擎
+
+- 理解浏览器的渲染过程图
+
+- 为什么需要Javascript引擎呢4点
+1.所有的高级编程语言，都需要转成机器指令来执行的
+2.编写的Javascript不能直接交给浏览器或者Node来执行，最终都要交给CPU来执行的
+3.CPU只认识自己的指令集，实际上是机器语言，才能被CPU执行
+4.所以需要JS引擎将代码翻译成CPU指令来执行
+
+- 常件的Javascript引擎，4个并介绍
+1.SpiderMonkey：第一款Javascript引擎，由Branden Eich开发，也是Javascript作者
+2.Chakra：由微软开发，用于IE浏览器
+3.JavascriptCore，WebKit中的JS引擎，由苹果开发
+4.V8：由Google开发，使得Chrome浏览器从众多浏览器中脱颖而出
+
+- 浏览器内核与JS引擎的关系，以WebKit举例，2点
+Webkit中包含两部分
+WebCore：解析HTML，负责页面布局，渲染等相关工作。
+JavaScriptCore：负责解析执行JS代码
+
+- 理解V8引擎的原理图
+
+- V8执行的细节，4点
+1.Blink将代码交给V8，Stream对代码做编码转换。
+2.Scanner对代码进行词法分析（lexical analysis），生成token
+3.token经过Parse和PreParse转成AST树结构
+	PreParse有什么用呢
+	1.并不是所有的JS代码，在最开始都会全部执行的，如果对全部代码做解析，那么必然会影响网页运行效率。
+	2.所以V8实现了Lazy Parsing（延迟加载）模块，对不必要的函数做预解析处理，而对函数的全量解析是在函数调用时进行的。
+4.生成AST后，经过ignition编译成字节码bytecode，之后就是JS代码的执行过程了
+
+- V8引擎的架构
+Parse模块将JavaScript代码转成AST抽象语法树，这是因为解释器不能直接识别Javascript代码
+	如果函数没有被调用，不会转成AST
+Ignition是一个解释器，它将AST树转成字节码bytecode
+	同时收集turbofan优化所需的信息，如函数参数类型信息，只有获取类型才能进行正常的计算
+	如果函数只调用一次，ignition会执行解释执行bytecode
+Turbofan是一个编译器，他将字节码编译成CPU能够执行的机器码
+	如果一个函数被调用多次，那么会被标记为雷电函数hot，经过turbofan转成优化后的机器码，提高代码的运行效率。
+	但是机器码也会被还原为字节码，这是因为如果后续执行函数的过程中，函数参数类型发生了变化，导致优化后的机器指令无法正确的处理运算，所以会被反向优化为字节码。
