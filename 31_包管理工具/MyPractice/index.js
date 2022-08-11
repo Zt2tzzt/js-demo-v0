@@ -3,7 +3,7 @@
  * @Author: ZeT1an
  * @Date: 2022-01-26 16:53:49
  * @LastEditors: ZeT1an
- * @LastEditTime: 2022-04-26 20:34:07
+ * @LastEditTime: 2022-08-11 15:23:01
  * @LastEditContent: 
  */
 /**
@@ -50,7 +50,7 @@
  */
 
 /**
- * 如果要安装依赖的新版本，删除package-lock.json文件，再执行npm install
+ * 如果要安装依赖的新版本，删除 package-lock.json 文件，再执行 npm install
  */
 
 /**

@@ -3,7 +3,7 @@
  * @Author: ZeT1an
  * @Date: 2022-01-24 17:41:45
  * @LastEditors: ZeT1an
- * @LastEditTime: 2022-02-23 09:35:58
+ * @LastEditTime: 2022-08-11 16:37:16
  * @LastEditContent: 
  */
 /**
@@ -47,9 +47,10 @@ var moduleA = (function () {
 /**
  * exports和module.exports之间的关系，3行代码解释。
  */
-module.exports = {}
-exports = module.exports
-exports.aaa = 'aaa';
+exporys === module.exports // true
+module.exports = {} // 新建了一个对象，本质上会导出这个对象。
+exports === module.exports // false
+exports.aaa = 'aaa'; // 此时 exports 中的属性不会被导出。没有意义
 
 /**
  * exports存在的意义，为了实现CommonJS规范，严格来说，module.exports导出是不符合CommonJS规范的。
@@ -57,8 +58,8 @@ exports.aaa = 'aaa';
 
 /**
  * require查找的原则：分3种情况,require(X)
- * 情况一：X是Node核心模块，直接返回核心模块并停止查找。
- * 情况二：X是以./或/形式开头的：
+ * 情况一：X是Node核心模块如 path、http，直接返回核心模块并停止查找。
+ * 情况二：X是以./或/（更目录）形式开头的：
  * 		当作一个文件：
  * 			有后缀名，查找对应的文件
  * 			没有后缀名，查找文件X，查找文件X.JS, 查找文件X.json，查找文件x.node
